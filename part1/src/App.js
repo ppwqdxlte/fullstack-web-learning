@@ -1,3 +1,5 @@
+import {useState} from 'react'
+
 const Hello = (props) => {
 	const bornYear = ()=>{
 		const yearNow = new Date().getFullYear();
@@ -30,10 +32,14 @@ const Counter = ({num})=>{
 	)
 }
 
-const App = (props) => {
+const App = () => {
 	  const name = 'Peter'
 	  const age = 100
-	  const {counter} = props
+	  let [counter,setCounter] = useState(0)
+	  setTimeout(()=>{
+		  if (counter>100) counter = 1
+		  setCounter(counter+1)
+	  },1000)
 	return (
 		    <>
 		      <h1>Greetings</h1>
