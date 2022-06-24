@@ -22,14 +22,24 @@ const Footer = () => {
 		    )
 }
 
-const App = () => {
+const Counter = ({num})=>{
+	return (
+		<div>
+			计数器:{num}
+		</div>
+	)
+}
+
+const App = (props) => {
 	  const name = 'Peter'
 	  const age = 100
+	  const {counter} = props
 	return (
 		    <>
 		      <h1>Greetings</h1>
 		      <Hello name="Maya" age={26 + 10} />
 		      <Hello name={name} age={age} />
+			  <Counter num={counter} />
 		      <Footer />
 		    </>
 		  )
