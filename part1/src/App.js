@@ -36,16 +36,20 @@ const App = () => {
 	  const name = 'Peter'
 	  const age = 100
 	  let [counter,setCounter] = useState(0)
-	  setTimeout(()=>{
-		  if (counter>100) counter = 1
+	  const handleClick = () => {
+	      console.log('clicked')
 		  setCounter(counter+1)
-	  },1000)
+	  }
+
 	return (
 		    <>
 		      <h1>Greetings</h1>
 		      <Hello name="Maya" age={26 + 10} />
 		      <Hello name={name} age={age} />
 			  <Counter num={counter} />
+			  <button onClick={handleClick}>
+					点击加1
+			  </button>
 		      <Footer />
 		    </>
 		  )
