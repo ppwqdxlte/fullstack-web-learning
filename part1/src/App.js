@@ -36,22 +36,15 @@ const Button = ({onClick, text}) => (
 )
 
 const App = () => {
-    const name = 'Peter'
-    const age = 100
-    let [counter, setCounter] = useState(0)
-    const increaseByOne = () => setCounter(counter + 1)
-    const setToZero = () => setCounter(0)
-    const decreaseByOne = () => setCounter(counter - 1)
+    const [left,setLeft] = useState(0)
+    const [right,setRight] = useState(0)
+
     return (
         <>
-            <h1>Greetings</h1>
-            <Hello name="Maya" age={26 + 10}/>
-            <Hello name={name} age={age}/>
-            <Counter num={counter}/>
-            <Button onClick={increaseByOne} text={'加一'}/>
-            <Button onClick={setToZero} text={'归零'}/>
-            <Button onClick={decreaseByOne} text={'减一'}/>
-            <Footer/>
+            {left}
+            <Button onClick={()=>setLeft(left+1)} text={'left'} />
+            {right}
+            <Button onClick={()=>setRight(right+1)} text={'right'} />
         </>
     )
 }
