@@ -35,6 +35,21 @@ const Button = ({onClick, text}) => (
     </button>
 )
 
+const History = ({allClicks}) => {
+    if (allClicks.length === 0) {
+        return (
+            <div>
+                the app is used by pressing the buttons
+            </div>
+        )
+    }
+    return (
+        <div>
+            button press history: {allClicks.join(' ')}
+        </div>
+    )
+}
+
 const App = () => {
     const [left, setLeft] = useState(0)
     const [right,setRight] = useState(0)
@@ -53,7 +68,7 @@ const App = () => {
             <Button onClick={handleLeftClick} text={'left'} />
             {right}
             <Button onClick={handleRightClick} text={'right'} />
-            <p>{allClicks.join(' ')}</p>
+            <History allClicks={allClicks} />
         </>
     )
 }
