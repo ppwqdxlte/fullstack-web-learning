@@ -36,15 +36,23 @@ const Button = ({onClick, text}) => (
 )
 
 const App = () => {
-    const [left,setLeft] = useState(0)
-    const [right,setRight] = useState(0)
-
+    const [clicks,setClicks] = useState({
+        left:0, right:0
+    })
+    const handleLeftClick = () => setClicks({
+        left: clicks.left + 1,
+        right: clicks.right
+    })
+    const handleRightClick = () => setClicks({
+        left: clicks.left,
+        right: clicks.right + 1
+    })
     return (
         <>
-            {left}
-            <Button onClick={()=>setLeft(left+1)} text={'left'} />
-            {right}
-            <Button onClick={()=>setRight(right+1)} text={'right'} />
+            { clicks.left }
+            <Button onClick={ handleLeftClick } text={'left'} />
+            { clicks.right }
+            <Button onClick={ handleRightClick } text={'right'} />
         </>
     )
 }
