@@ -1,7 +1,5 @@
-const Note = ({note}) =>
-    <li>
-        {note.date}<br/>{note.content}
-    </li>
+import Note from './components/Note'
+
 const App = ({notes}) =>
     <>
         <h1>Notes</h1>
