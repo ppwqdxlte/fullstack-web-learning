@@ -8,10 +8,14 @@
 *
 * 以前学过用XMLHttpRequest(XHR)对象进行HTTP请求来获取数据，1999年的老技术了，
 * 【建议】不再推荐XHR，而推荐浏览器广泛使用的fetch方法，
-* fetch方法基于promises，而不是XHR使用的事件驱动模型。
-*
-* 在今天的浏览器中，可以借助所谓的网络工作者来运行并行化的代码。
+* fetch方法基于promises，而不是XHR使用的事件驱动模型，在今天的浏览器中，可以借助所谓的网络工作者来运行并行化的代码。
 * 然而，单个浏览器窗口的事件循环仍然只能由一个[单线程]处理
 *
-*
+* axios库相当于fetch，但更顺手，安装：
+*   npm install axios
+*   npm install json-server --save-dev  (仅开发环境作数据库使用)
+* 在package.json的scripts部分补充：
+*   "server": "json-server -p3001 --watch db.json"
+* 这样根目录下启动json-server更方便了：
+*   npm run server
 * */
