@@ -5,6 +5,8 @@ const App = (props) => {
     const [notes,setNotes] = useState(props.notes)
     const [newNote,setNewNote] = useState('a new note...')
 
+    const notesToShow = notes.filter(note => note.important === true)
+
     const addNote = (event) => {
         event.preventDefault()
         //console.log('button clicked',event.target)
@@ -26,8 +28,7 @@ const App = (props) => {
         <>
             <h1>Notes</h1>
             <ul>
-                {/*不推荐用(..., i)=>...带索引的方式，有大大问题*/}
-                {notes.map(note =>
+                {notesToShow.map(note =>
                     <Note key={note.id} note={note}/>
                 )}
             </ul>
