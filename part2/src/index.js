@@ -5,31 +5,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const notes = [
-    {
-    id: 1,
-    content: 'HTML is easy',
-    date: '2019-05-30T17:30:31.098Z',
-    important: true
-},
-    {
-        id: 2,
-        content: 'Browser can execute only JavaScript',
-        date: '2019-05-30T18:39:34.091Z',
-        important: false
-    },
-    {
-        id: 3,
-        content: 'GET and POST are the most important methods of HTTP protocol',
-        date: '2019-05-30T19:20:14.298Z',
-        important: true
+/*XHR方式获取json服务器的数据*/
+const xhttp = new XMLHttpRequest()
+xhttp.onreadystatechange = () => {
+    //【this问题】this在这里undefined，只能用xhttp引用readyState和status
+    console.log(this)
+    if (xhttp.readyState === 4 && xhttp.status === 200){
+        const data = JSON.parse(xhttp.responseText)
+        // andle the response that is saved in variable data
+        root.render(
+            <React.StrictMode>
+                <App notes={data}/>
+            </React.StrictMode>
+        )
     }
-];
-root.render(
-  <React.StrictMode>
-    <App notes={notes}/>
-  </React.StrictMode>
-);
+}
+xhttp.open('GET','http://localhost:3001/notes',true)
+xhttp.send()
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
