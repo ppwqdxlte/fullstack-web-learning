@@ -1,50 +1,51 @@
 import {useState, useEffect} from "react";
-import axios from 'axios'
-import Note from './components/Note'
+import axios from 'axios';
+import Person from "./components/Person";
 
 const App = () => {
-    const [notes, setNotes] = useState([])
-    const [newNote, setNewNote] = useState('add a new note...')
+    const [persons, setPersons] = useState([])
+    const [newPerson, setNewPerson] = useState('add a new note...')
     const [showAll, setShowAll] = useState(true)
-    const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
+    const personsToShow = showAll ? persons : persons.filter(person => Math.random() * person.id <= 0.5 * person.id)
 
-    const handleNoteChange = (event) => {
-        setNewNote(event.target.value)
+    const handlePersonChange = (event) => {
+        setNewPerson(event.target.value)
     }
 
-    const addNote = (event) => {
+    const addPerson = (event) => {
         event.preventDefault()
-        setNotes(notes.concat({
-            id: notes.length + 1,
-            content: newNote,
-            date: new Date().toISOString(),
-            important: Math.random() < 0.5
+        setPersons(persons.concat({
+            id: persons.length + 1,
+            number: (''.concat(Math.floor(Math.random() * 100)).padStart(2, '0')).concat('-')
+                .concat(''.concat(Math.floor(Math.random() * 100)).padStart(2, '0')).concat('-')
+                .concat(''.concat(Math.floor(Math.random() * 10000000)).padStart(7, '0')),
+            name: newPerson
         }))
-        setNewNote('')
+        setNewPerson('')
     }
 
     useEffect(() => {
         console.log('effect')
         axios
-            .get('http://localhost:3001/notes')
+            .get('http://localhost:3001/persons')
             .then(response => {
                 console.log('promise fulfilled')
-                setNotes(response.data)
+                setPersons(response.data)
             })
     }, [])
-    console.log('render', notesToShow.length, 'notes')
+    console.log('render', personsToShow.length, 'persons')
 
     return (
         <>
-            <h1>Notes</h1>
+            <h1>Persons</h1>
             <button onClick={() => setShowAll(!showAll)}>show {showAll ? 'all' : 'important'}</button>
-            {notesToShow.map(note =>
-                <ul key={note.id}>
-                    <Note note={note}/>
+            {personsToShow.map(person =>
+                <ul key={person.id}>
+                    <Person person={person}/>
                 </ul>
             )}
-            <form  onSubmit={addNote}>
-                <input onChange={handleNoteChange} value={newNote}/>
+            <form onSubmit={addPerson}>
+                <input onChange={handlePersonChange} value={newPerson}/>
                 <button type='submit'>添加</button>
             </form>
         </>
