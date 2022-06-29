@@ -36,4 +36,20 @@
 * useEffect的第二个参数用于指定效果的运行频率，
 * 如果第二个参数是一个空的数组[]，那么效果就只在组件的第一次渲染时运行。
 *
+* 通常需要一个【 api-key 】来使用REST API服务。
+* 不要把api-key保存到源码控制中!也不要在你的源代码中硬编码api-key！
+* 而是使用一个环境变量来保存该密钥。比如应用该这样启动：
+*   REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3 npm start // For Linux/macOS Bash
+*   ($env:REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3) -and (npm start) // For Windows PowerShell
+*   set REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3 && npm start // For Windows cmd.exe
+* 可以从process.env对象中访问该键的值：
+*   const api_key = process.env.REACT_APP_API_KEY
+* 注意，如果你用npx create-react-app ...创建了应用，
+* 那么环境变量的名字仍然必须以REACT_APP_开头。你也可以使用.env文件，
+* 而不是每次都在命令行上定义它，方法是在项目的根部创建一个名为".env"的文件，
+* 并加入以下内容：
+*   # .env
+*   REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3
+* 详情： https://fullstackopen.com/zh/part2/%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE
+*
 * */
