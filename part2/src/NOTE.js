@@ -58,4 +58,16 @@
 * 在添加了与后端服务器通信的代码后，App组件变得有些臃肿。
 * 本着【单一责任原则】，我们认为将这种通信提取到自己的【模块】是明智的。
 *
+* export default { getAll: getAll, create: create, update: update }
+*       相当于 export default {getAll, create, update}
+* 这种紧凑型语法源自于ES6，再比如：
+*       const name = 'Leevi'; const age = 0
+* 旧版JavaScript必须这样定义一个对象：
+*       const person = { name: name, age: age }
+* 由于属性名和变量一样，ES6以后可以这样写：
+*       const person = { name, age }
+*
+*
+*
+*
 * */
