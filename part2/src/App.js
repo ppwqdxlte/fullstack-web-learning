@@ -41,6 +41,12 @@ const App = () => {
         entryService.update('http://localhost:3001/persons',id,changedPerson)
             .then(response=>{
             setPersons(persons.map(p=>p.id!==id?p:response.data))
+        }).catch(err=>{
+            //在更严肃的React应用中，使用alert可能不是一个好主意。
+            // 我们很快就会学到一种更高级的向用户显示消息和通知的方法。
+            alert(`the person '${changedPerson.name}' was already deleted from server`)
+            console.log(err.message())
+            setPersons(persons.filter(p=>p.id !== id))
         })
     }
 
