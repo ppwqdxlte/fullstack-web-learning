@@ -8,17 +8,14 @@ const App = () => {
     const [persons, setPersons] = useState([])
     const [showAll, setShowAll] = useState(true)
     const personsToShow = showAll ? persons : persons.filter(person => Math.random() * person.id <= 0.5 * person.id)
-    /*  input的状态钩子以及本身都单独拿到MyInput组件中，防止onChange反复刷新App组件造成卡顿闪烁
-          const handleInputChange = (event) => {
-          setNewPerson(event.target.value)
-      }*/
+
     let np = {id: '', name: '', number: ''}
     const addPerson = (event) => {
         event.preventDefault()
         np.number = (''.concat((Math.floor(Math.random() * 100).toString())).padStart(2, '0')).concat('-')
             .concat(''.concat((Math.floor(Math.random() * 100).toString())).padStart(2, '0')).concat('-')
             .concat(''.concat((Math.floor(Math.random() * 10000000).toString())).padStart(7, '0'))
-        //setNewPerson('') Input状态改变都放在单独的MyInput组件中
+        //setNewPerson('') Input状态改变都放在单独的MyInput组件中，状态在哪里，就刷新哪里，避免反复闪烁刷新整个App
         //我就是试试 function deepCopy()方法单独作为组件拿出来好不好用，答案是YES，very good!
         const np2 = DeepCopy(np)
         //持久化到json-server
@@ -26,12 +23,8 @@ const App = () => {
             .post('http://localhost:3001/persons', np2)
             .then(response => {
                 console.log('添加成功', response)
-                //刷新页面列表
-                axios
-                    .get('http://localhost:3001/persons')
-                    .then(response => {
-                        setPersons(response.data)
-                    })
+                //刷新页面列表，axios.post方法可以返回新添加的对象，就没必要重新发get请求了
+                setPersons(persons.concat(response.data))
             })
     }
 
