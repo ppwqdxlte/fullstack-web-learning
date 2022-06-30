@@ -3,11 +3,13 @@ import Person from "./components/Person";
 import MyInput from "./components/MyInput";
 import entryService from "./services/entries";
 import Notification from "./components/Notification";
+import Footer from "./components/Footer";
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [showAll, setShowAll] = useState(true)
     const [errMsg, setErrMsg] = useState(null)//试一试括号内'some thing wrong...'
+    const [msg,setMsg] = useState(null)
     const personsToShow = showAll ? persons : persons.filter(person => Math.random() * person.id <= 0.5 * person.id)
 
     let np = {id: '', name: '', number: ''}
@@ -20,6 +22,8 @@ const App = () => {
         entryService.create('http://localhost:3001/persons', np)
             .then(response => {
                 console.log('添加成功', response)
+                setMsg('添加成功')
+                setTimeout(()=>setMsg(null),2000)
                 setPersons(persons.concat(response.data))
             })
     }
@@ -44,6 +48,8 @@ const App = () => {
         }
         entryService.update('http://localhost:3001/persons', id, changedPerson)
             .then(response => {
+                setMsg(`修改了${response.data.id}的number`)
+                setTimeout(()=>setMsg(null),2000)
                 setPersons(persons.map(p => p.id !== id ? p : response.data))
             }).catch(err => {
             // 【状态消息】
@@ -58,7 +64,8 @@ const App = () => {
     return (
         <>
             <h1>Persons</h1>
-            <Notification msg={errMsg}/>
+            <Notification msg={errMsg} type={'err'}/>
+            <Notification msg={msg} type={'normalMsg'} />
             <button onClick={() => setShowAll(!showAll)}>show {showAll ? 'all' : 'important'}</button>
             {personsToShow.map(person =>
                 <ul key={person.id}>
@@ -69,6 +76,7 @@ const App = () => {
                 <MyInput obj={np}/>
                 <button type='submit'>添加</button>
             </form>
+            <Footer footerName='PersonApp'/>
         </>
     )
 }

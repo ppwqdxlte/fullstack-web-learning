@@ -1,9 +1,9 @@
-const Notification = ({msg}) => {
+const Notification = ({msg,type}) => {
     if (msg === null) {
         return null;
     }
     return (
-        <div className='err'>
+        <div className={type}>
             {msg}
         </div>
     )
