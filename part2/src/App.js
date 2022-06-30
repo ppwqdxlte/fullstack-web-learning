@@ -38,6 +38,18 @@ const App = () => {
             })
     }, [])
     console.log('render', personsToShow.length, 'persons')
+    //导入函数
+    const toggleStarOf = (id) => {
+        const url = `http://localhost:3001/persons/${id}`
+        const person = persons.find(p => p.id === id)
+        const pn1 = person.number.substring(0,1)
+        const changedPerson = {...person, number:
+                (pn1%2===0?(parseInt(pn1)+1):(parseInt(pn1)-1)).toString()+person.number.substring(1)}
+        //console.log(pn1,person,changedPerson)
+        axios.put(url,changedPerson).then(response=>{
+            setPersons(persons.map(p=>p.id!==id?p:response.data))
+        })
+    }
 
     return (
         <>
@@ -45,7 +57,7 @@ const App = () => {
             <button onClick={() => setShowAll(!showAll)}>show {showAll ? 'all' : 'important'}</button>
             {personsToShow.map(person =>
                 <ul key={person.id}>
-                    <Person person={person}/>
+                    <Person person={person} toggleStar={() => toggleStarOf(person.id)}/>
                 </ul>
             )}
             <form onSubmit={addPerson}>

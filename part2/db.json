@@ -22,17 +22,17 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "040-123456",
+      "number": "24-01-123456",
       "id": 1
     },
     {
       "name": "Ada Lovelace",
-      "number": "39-44-5323523",
+      "number": "29-44-5323523",
       "id": 2
     },
     {
       "name": "Dan Abramov",
-      "number": "12-43-234345",
+      "number": "02-43-234345",
       "id": 3
     },
     {
@@ -154,6 +154,16 @@
       "id": 27,
       "name": "加油",
       "number": "29-38-9243160"
+    },
+    {
+      "id": 28,
+      "name": "Fighting！！！",
+      "number": "70-94-8459935"
+    },
+    {
+      "id": 29,
+      "name": "加油",
+      "number": "94-07-4976157"
     }
   ]
 }

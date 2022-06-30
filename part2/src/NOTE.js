@@ -1,4 +1,4 @@
-/*
+/* 启动React应用 npm start
 * React使用数组中对象的键属性来决定如何在组件重新渲染时更新该组件生成的视图。
 * 关于这一点，更多的可以查看React文档https://reactjs.org/docs/reconciliation.html#recursing-on-children
 *
@@ -51,5 +51,9 @@
 *   # .env
 *   REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3
 * 详情： https://fullstackopen.com/zh/part2/%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE
+*
+* 存储在json-server后台的单个笔记可以通过对笔记的唯一URL进行HTTP请求，以两种不同方式进行修改。
+* 我们可以用【HTTP PUT请求】来替换整个笔记，或者用【HTTP PATCH请求】只改变笔记的某些属性。
+*
 *
 * */
