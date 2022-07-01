@@ -6,18 +6,5 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ppwqdxlte/fullstack-web-learning.git"
-  },
-  "keywords": [
-    "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"
-  ],
-  "author": "ligangmao",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ppwqdxlte/fullstack-web-learning/issues"
-  },
-  "homepage": "https://github.com/ppwqdxlte/fullstack-web-learning#readme"
+  }
 }
