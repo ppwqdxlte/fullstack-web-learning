@@ -7,4 +7,9 @@
 *   【注意】start脚本之所以可以工作，因为在package.json中"scripts"处定义了"start"，
 *       同理，虽然没有test库，【 npm test 】也能简单执行指定的命令。
 * 尽管node index.js有效，但npm项目习惯于使用 npm 命令。
+*
+* 在提交的文件中包含Token也没事儿，Github自动检测到后就把token整无效了，
+* 需要重新创建新的token即可。
+*
+*
 * */
