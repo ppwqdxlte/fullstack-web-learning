@@ -17,6 +17,13 @@
 * 然而Node.js用CommonJS模块，原因是早在JS语言规范支持模块前，Node生态已经引入了模块特性，
 * Node如今也支持了ES6模块，但由于支持不完善，将坚持使用CommonJS模块。
 *
+* 用Node内置的http实现server一旦app规模扩大就很麻烦，
+* 最流行的创建后端服务器的库是【 express 】:
+* !!! 不用执行 npm install express !!!也不用更新项目的依赖关系：npm update
+* 好像因为part3的父文件夹有node_modules，已经包含了express模块？？？
+* index.js先用express写服务器，再写map接口API，
+* 然后npm start启动，请求http://localhost:3002 and http://localhost:3002/api/notes
+*
 *
 *
 *
