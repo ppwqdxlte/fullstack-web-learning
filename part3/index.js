@@ -33,7 +33,11 @@ app.get('/api/notes', (request, response) => {
 app.get('/api/notes/:id', (request, response) => {
     const id = Number(request.params.id) //url参数为string类型
     const note = notes.find(note => note.id === id)
-    response.json(note)
+    if (note){
+        response.json(note)
+    }else {
+        response.status(404).end('<h1>ERROR!Not found!!!</h1>')
+    }
 })
 
 const PORT = 3002
