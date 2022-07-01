@@ -22,15 +22,21 @@ let notes = [
     }
 ]
 
-app.get('/',(request, response)=>{
+app.get('/', (request, response) => {
     response.send("<h1>Hello,express world!</h1>")
 })
 
-app.get('/api/notes',(request,response)=>{
+app.get('/api/notes', (request, response) => {
     response.json(notes)
 })
 
+app.get('/api/notes/:id', (request, response) => {
+    const id = Number(request.params.id) //url参数为string类型
+    const note = notes.find(note => note.id === id)
+    response.json(note)
+})
+
 const PORT = 3002
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

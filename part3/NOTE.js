@@ -33,4 +33,7 @@
 *   package.json "dev": "nodemon index.js"后
 *    启动：   npm run dev
 *
+* 扩展我们的应用，使其提供与json-server一样的【 RESTful HTTP API 】。
+* 创建一个【 路由 】来获取一个单一的资源，使用【 冒号语法 】为Express中的路由定义参数。
+*
 * */
