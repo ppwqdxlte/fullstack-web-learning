@@ -11,5 +11,13 @@
 * 在提交的文件中包含Token也没事儿，Github自动检测到后就把token整无效了，
 * 需要重新创建新的token即可。
 *
+* 编辑index.js将应用变成 web server http://localhost:3001
+* http://localhost:3001/哈哈哈　此时随便什么端点和上面URL显示一样内容。
+* Node.js语法不太一样，browser中运行的代码都是用ES6模块，模块用export定义，用import引用。
+* 然而Node.js用CommonJS模块，原因是早在JS语言规范支持模块前，Node生态已经引入了模块特性，
+* Node如今也支持了ES6模块，但由于支持不完善，将坚持使用CommonJS模块。
+*
+*
+*
 *
 * */
