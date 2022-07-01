@@ -24,7 +24,13 @@
 * index.js先用express写服务器，再写map接口API，
 * 然后npm start启动，请求http://localhost:3002 and http://localhost:3002/api/notes
 *
-*
-*
+* 鉴于每次修改ctrl+c npm start重启太麻烦，能不能让browser自动重新加载？？
+* 【 nodemon 】将观察nodemon启动时所在目录的文件变化，一经变化立即自动重启。
+*    安装：   npm install --save-dev nodemon
+*    启动：   nodemon index.js
+* server自动重启，browser也要手动刷新！
+* 因为没有React那种【 hot reload 】热加载功能！！
+*   package.json "dev": "nodemon index.js"后
+*    启动：   npm run dev
 *
 * */
