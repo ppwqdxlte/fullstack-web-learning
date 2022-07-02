@@ -1,6 +1,16 @@
 const express = require("express")
 const app = express()
+
 app.use(express.json())
+
+const requestLogger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:  ', request.path)
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+}
+app.use(requestLogger)
 
 let persons = [
     {"id": 1, "name": "Arto Hellas", "number": "040-123456"},
@@ -71,6 +81,16 @@ app.post('/api/persons', (req, res) => {
     res.json(newPerson)
     persons = persons.concat(newPerson)
 })
+
+/*
+        这不就是【拦截器】嘛！代码位置非常有讲究！
+        中间件放在app路由函数之前就是处理HTTP请求之前拦截，
+        中间件放在app路由函数之后就是处理完HTTP后拦截
+*/
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({error: 'unknown endpoint'})
+}
+app.use(unknownEndpoint)
 
 const PORT = 3003
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
