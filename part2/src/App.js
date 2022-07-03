@@ -5,6 +5,8 @@ import entryService from "./services/entries";
 import Notification from "./components/Notification";
 import Footer from "./components/Footer";
 
+const baseUrl = 'http://localhost:3003/api/persons'
+
 const App = () => {
     const [persons, setPersons] = useState([])
     const [showAll, setShowAll] = useState(true)
@@ -19,7 +21,7 @@ const App = () => {
             .concat(''.concat((Math.floor(Math.random() * 100).toString())).padStart(2, '0')).concat('-')
             .concat(''.concat((Math.floor(Math.random() * 10000000).toString())).padStart(7, '0'))
 
-        entryService.create('http://localhost:3001/persons', np)
+        entryService.create(baseUrl, np)
             .then(response => {
                 console.log('添加成功', response)
                 setMsg('添加成功')
@@ -30,7 +32,7 @@ const App = () => {
 
     useEffect(() => {
         console.log('effect')
-        entryService.getAll('http://localhost:3001/persons')
+        entryService.getAll(baseUrl)
             .then(response => {
                 console.log('promise fulfilled')
                 setPersons(response.data)
@@ -46,7 +48,7 @@ const App = () => {
             ...person, number:
                 (pn1 % 2 === 0 ? (parseInt(pn1) + 1) : (parseInt(pn1) - 1)).toString() + person.number.substring(1)
         }
-        entryService.update('http://localhost:3001/persons', id, changedPerson)
+        entryService.update(baseUrl, id, changedPerson)
             .then(response => {
                 setMsg(`修改了${response.data.id}的number`)
                 setTimeout(()=>setMsg(null),2000)
