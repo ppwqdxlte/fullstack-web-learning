@@ -13,4 +13,11 @@
 *
 * https://github.com/expressjs/morgan
 * Morgan中间件，以后有需要再研究吧。
+*
+* 【同源策略】和【 CORS 】并不是专门针对 React 或 Node，它们实际上是网络应用操作的普遍原则。
+* 可以通过使用 Node's【 cors 中间件】来允许来自其他原点的请求。
+*   1.后端仓库中，安装： npm install cors
+*   2.取中间件来使用，并允许来自所有源的请求。
+*           const cors = require('cors')
+*           app.use(cors())
 * */

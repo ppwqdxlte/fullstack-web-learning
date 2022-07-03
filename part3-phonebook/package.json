@@ -9,5 +9,8 @@
     "test": "echo 'Error: No test specified!!' && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }

@@ -11,7 +11,7 @@ const App = () => {
     const [persons, setPersons] = useState([])
     const [showAll, setShowAll] = useState(true)
     const [errMsg, setErrMsg] = useState(null)//试一试括号内'some thing wrong...'
-    const [msg,setMsg] = useState(null)
+    const [msg, setMsg] = useState(null)
     const personsToShow = showAll ? persons : persons.filter(person => Math.random() * person.id <= 0.5 * person.id)
 
     let np = {id: '', name: '', number: ''}
@@ -25,7 +25,7 @@ const App = () => {
             .then(response => {
                 console.log('添加成功', response)
                 setMsg('添加成功')
-                setTimeout(()=>setMsg(null),2000)
+                setTimeout(() => setMsg(null), 2000)
                 setPersons(persons.concat(response.data))
             })
     }
@@ -51,27 +51,45 @@ const App = () => {
         entryService.update(baseUrl, id, changedPerson)
             .then(response => {
                 setMsg(`修改了${response.data.id}的number`)
-                setTimeout(()=>setMsg(null),2000)
+                setTimeout(() => setMsg(null), 2000)
                 setPersons(persons.map(p => p.id !== id ? p : response.data))
-            }).catch(err => {
-            // 【状态消息】
-            setErrMsg(`the person '${changedPerson.name}' was already deleted from server`)
-            //定时删除或隐藏消息
-            setTimeout(() => setErrMsg(null), 5000)
+            })
+            .catch(err => {
+                console.log(err.message())
+                // 【状态消息】
+                setErrMsg(`the person '${changedPerson.name}' was already deleted from server`)
+                //定时删除或隐藏消息
+                setTimeout(() => setErrMsg(null), 5000)
 
-            setPersons(persons.filter(p => p.id !== id))
-        })
+                setPersons(persons.filter(p => p.id !== id))
+            })
+    }
+
+    const deletePerson = (id) => {
+        entryService.deleteEntry(baseUrl, id)
+            .then(response => {
+                console.log(response.data)
+                setMsg(`删除了${response.data.name}的number`)
+                setTimeout(() => setMsg(null), 2000)
+                setPersons(persons.filter(p=>p.id!==id))
+            })
+            .catch(err => {
+                console.log(err.message())
+                setErrMsg(`Fail to delete the person of ID: '${id}'`)
+                setTimeout(() => setErrMsg(null), 5000)
+            })
     }
 
     return (
         <>
             <h1>Persons</h1>
             <Notification msg={errMsg} type={'err'}/>
-            <Notification msg={msg} type={'normalMsg'} />
+            <Notification msg={msg} type={'normalMsg'}/>
             <button onClick={() => setShowAll(!showAll)}>show {showAll ? 'all' : 'important'}</button>
             {personsToShow.map(person =>
                 <ul key={person.id}>
                     <Person person={person} toggleStar={() => toggleStarOf(person.id)}/>
+                    <button onClick={() => deletePerson(person.id)}>删除</button>
                 </ul>
             )}
             <form onSubmit={addPerson}>

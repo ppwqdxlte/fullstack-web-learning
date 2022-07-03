@@ -1,6 +1,8 @@
 const express = require("express")
+const cors = require("cors")
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 const requestLogger = (request, response, next) => {
@@ -55,11 +57,7 @@ const generateId = () => {
         : 0
     return maxId + 1
 }
-const generatePhoneNumber = () => {
-    const n2 = Math.floor(Math.random() * 100).toString().padStart(2, '0')
-    const n7 = Math.floor(Math.random() * 10000000).toString().padStart(7, '0')
-    return n2.concat('-').concat(n2).concat('-').concat(n7)
-}
+
 app.post('/api/persons', (req, res) => {
     const body = req.body
     if (!body) {
@@ -76,10 +74,21 @@ app.post('/api/persons', (req, res) => {
         return
     }
     const id = generateId()
-    const number = generatePhoneNumber()
+    const number = body.number
     const newPerson = {id, name, number}
     res.json(newPerson)
     persons = persons.concat(newPerson)
+})
+
+app.put('/api/persons/:id', (req, res) => {
+    const id = Number(req.params.id)
+    if (!persons.find(p => p.id === id)) {
+        res.status(404).send({error: 'Donnot have this ID!'}).end(() => console.error('ID不存在！！'))
+        return
+    }
+    const body = req.body
+    res.json(body)
+    persons = persons.filter(p => p.id === id ? {id: req.params.id, name: body.name, number: body.number} : p)
 })
 
 /*
