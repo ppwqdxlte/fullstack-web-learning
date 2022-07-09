@@ -10,7 +10,10 @@ if (process.argv.length < 3) {
 }
 
 const password = process.argv[2]
-
+/*
+* ...net/${数据库名称}?retryWrites... 如果没写，默认就是test数据库
+* 比如/myFirstDatabase?...那么就会在cluster中自动创建一个名为myFirstDatabase的数据库（如果第一次执行这个名称的url）
+* */
 const url = `mongodb+srv://laowang:${password}@my1stcluster.flysgcs.mongodb.net/?retryWrites=true&w=majority`
 
 Mongoose.connect(url).then(() => console.log('连接成功')).catch(err => console.log(err.message))
@@ -21,7 +24,7 @@ const personSchema = new Mongoose.Schema({
 })
 
 const Person = Mongoose.model('Person', personSchema)
-
+/*
 const person = new Person({
     name: '老王',
     number: '88-88-8888888'
@@ -29,5 +32,12 @@ const person = new Person({
 
 person.save().then(result=>{
     console.log('person saved!',result.toString())
+    Mongoose.connection.close(()=>console.log('连接关闭'))
+})*/
+
+Person.find({}).then(result =>{
+    result.forEach( p =>{
+        console.log(p)
+    })
     Mongoose.connection.close(()=>console.log('连接关闭'))
 })
