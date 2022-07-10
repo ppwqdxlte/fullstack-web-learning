@@ -12,7 +12,8 @@ const App = () => {
     const [showAll, setShowAll] = useState(true)
     const [errMsg, setErrMsg] = useState(null)//试一试括号内'some thing wrong...'
     const [msg, setMsg] = useState(null)
-    const personsToShow = showAll ? persons : persons.filter(person => Math.random() * person.id <= 0.5 * person.id)
+    const personsToShow = showAll ? persons : persons.filter(person =>
+        Number(person.id.substring(person.id.length-1,person.id.length)))
 
     let np = {id: '', name: '', number: ''}
     const addPerson = (event) => {

@@ -24,20 +24,20 @@ const personSchema = new Mongoose.Schema({
 })
 
 const Person = Mongoose.model('Person', personSchema)
-/*
+
 const person = new Person({
-    name: '老王',
-    number: '88-88-8888888'
+    name: '张一鸣',
+    number: '21-23-2362172'
 })
 
-person.save().then(result=>{
-    console.log('person saved!',result.toString())
-    Mongoose.connection.close(()=>console.log('连接关闭'))
-})*/
+person.save().then(result => {
+    console.log('person saved!', result.toString())
+    Mongoose.connection.close(() => console.log('连接关闭'))
+})
 
-Person.find({}).then(result =>{
+/*Person.find({}).then(result =>{
     result.forEach( p =>{
         console.log(p)
     })
     Mongoose.connection.close(()=>console.log('连接关闭'))
-})
+})*/
