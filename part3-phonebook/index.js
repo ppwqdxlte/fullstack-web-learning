@@ -2,7 +2,7 @@ require('dotenv').config()  // index.js里头上引用这句全局好使，引�
 const express = require("express")
 const cors = require("cors")
 const app = express()
-const { mongoose,url,Person} = require('./models/person');
+const {mongoose, url, Person} = require('./models/person');
 
 app.use(cors())
 app.use(express.json())
@@ -50,7 +50,7 @@ app.get('/api/persons/:id', (req, res) => {
         res.json(person)
     }
 })
-app.delete('/api/persons/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
     const id = req.params.id
     if (!persons.find(p => p.id === id)) {
         res.status(204).end()
@@ -61,13 +61,13 @@ app.delete('/api/persons/:id', (req, res) => {
             Person.findByIdAndDelete(id).then(result => {
                 persons = persons.filter(p => p.id !== id) //内存中删除person
                 res.json(result.toJSON()).end()             //返回响应
-            }).catch(err => {
-                console.log('删除失败，因为', err.message)
-            }).finally(() => mongoose.connection.close(() => console.log('delete连接关闭')))
-        }).catch(() => console.log('因为连接不上数据库导致删除失败'))
+            })
+                .catch(err => next(err))
+                .finally(() => mongoose.connection.close(() => console.log('delete连接关闭')))
+        }).catch(err => next(err))
     }
 })
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res,next) => {
     const body = req.body
     if (!body) {
         res.status(204).end(() => console.error('没东西添加什么啊？！'))
@@ -90,12 +90,12 @@ app.post('/api/persons', (req, res) => {
         newPerson.save().then(result => {
             persons = persons.concat(result) //刷新内存
             res.json(result.toJSON())
-        }).catch(err => {
-            console.log('添加失败，因为', err.message)
-        }).finally(() => mongoose.connection.close(() => console.log('add连接关闭')))
-    }).catch(e => console.log('add连接失败', e.message))
+        })
+            .catch(err => next(err))
+            .finally(() => mongoose.connection.close(() => console.log('add连接关闭')))
+    }).catch(err=>next(err))
 })
-app.put('/api/persons/:id', (req, res) => {
+app.put('/api/persons/:id', (req, res,next) => {
     const id = req.params.id
     if (!persons.find(p => p.id === id)) {
         res.status(404).send({error: 'Donnot have this ID!'}).end(() => console.error('ID不存在！！'))
@@ -112,10 +112,10 @@ app.put('/api/persons/:id', (req, res) => {
         Person.findByIdAndUpdate(id, modifiedPerson, {new: true}).then(result => {
             res.json(result.toJSON())   //返回响应
             persons = persons.filter(p => p.id === id ? {id: result._id, name: result.name, number: result.number} : p)
-        }).catch(err => {
-            console.log('更新失败，因为', err.message)
-        }).finally(() => mongoose.connection.close(() => console.log('update连接关闭')))
-    }).catch(err => console.log('update连接失败', err.message))
+        })
+            .catch(err => next(err))
+            .finally(() => mongoose.connection.close(() => console.log('update连接关闭')))
+    }).catch(err => next(err))
 })
 
 /*
@@ -127,6 +127,18 @@ const unknownEndpoint = (request, response) => {
     response.status(404).send({error: 'unknown endpoint'})
 }
 app.use(unknownEndpoint)
+
+/*  Express error handler 中间件   */
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+    if (error.name === 'CastError') {
+        return response.status(400).send({error: 'malformatted id'})
+    }
+    //略，error的名称太多了，不一一枚举匹配了
+    next(error)
+}
+// error handler一定在中间件链条中的最下端
+app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
