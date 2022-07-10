@@ -1,6 +1,8 @@
+require('dotenv').config()  // index.js里头上引用这句全局好使，引用person模块里面的url也可以获取正确的环境变量
 const express = require("express")
 const cors = require("cors")
 const app = express()
+const { mongoose,url,Person} = require('./models/person');
 
 app.use(cors())
 app.use(express.json())
@@ -14,25 +16,6 @@ const requestLogger = (request, response, next) => {
 }
 app.use(requestLogger)
 
-//  mongoose 服务
-const mongoose = require('mongoose')
-if (process.argv.length < 3) {
-    console.log('mongodb密码呢？你踏马的吃了吗？？！')
-    process.exit(1)
-}
-const password = process.argv[2]
-const url = `mongodb+srv://laowang:${password}@my1stcluster.flysgcs.mongodb.net/?retryWrites=true&w=majority`
-const personSchema = new mongoose.Schema({
-    name: String, number: String
-})
-personSchema.set('toJSON', {
-    transform: (document, returnedObj) => {
-        returnedObj.id = document._id.toString()
-        delete returnedObj._id
-        delete returnedObj.__v
-    }
-})
-const Person = mongoose.model('Person', personSchema)
 /*  初始化电话簿数组    */
 let persons = []
 mongoose.connect(url).then(() => {
@@ -145,5 +128,5 @@ const unknownEndpoint = (request, response) => {
 }
 app.use(unknownEndpoint)
 
-const PORT = 3003
+const PORT = process.env.PORT
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
