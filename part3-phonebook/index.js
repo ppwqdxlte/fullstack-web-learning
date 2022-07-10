@@ -109,7 +109,8 @@ app.put('/api/persons/:id', (req, res,next) => {
     //修改mongodb中的对应记录
     mongoose.connect(url).then(() => {
         console.log('update连接成功')
-        Person.findByIdAndUpdate(id, modifiedPerson, {new: true}).then(result => {
+        Person.findByIdAndUpdate(id, modifiedPerson, {new: true,runValidators:true,context:'query'})
+            .then(result => {
             res.json(result.toJSON())   //返回响应
             persons = persons.filter(p => p.id === id ? {id: result._id, name: result.name, number: result.number} : p)
         })
@@ -133,6 +134,8 @@ const errorHandler = (error, request, response, next) => {
     console.error(error.message)
     if (error.name === 'CastError') {
         return response.status(400).send({error: 'malformatted id'})
+    }else if (error.name === 'ValidationError'){
+        return response.status(400).json({error:error.message})
     }
     //略，error的名称太多了，不一一枚举匹配了
     next(error)

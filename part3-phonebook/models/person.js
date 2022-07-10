@@ -7,8 +7,18 @@ const url = process.env.MONGODB_URL
 console.log('Mongodb-url is:', url)
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String
+    name: {
+        type: String,
+        minLength: 2,
+        maxLength: 50,
+        required: true
+    },
+    number: {
+        type: String,
+        minLength: 13,
+        maxLength: 20,
+        required: true
+    }
 })
 
 personSchema.set('toJSON', {
