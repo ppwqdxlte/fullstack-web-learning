@@ -20,4 +20,15 @@
 *   2.取中间件来使用，并允许来自所有源的请求。
 *           const cors = require('cors')
 *           app.use(cors())
+*
+* Lint:
+*   ESlint作为开发依赖项安装到后端项目中:  npm install eslint --save-dev
+*   用命令初始化一个默认的ESlint配置:     npx eslint --init
+*   检查和验证像index.js:               npx eslint index.js
+*   package.json添加便捷脚本:           "lint":"eslint ."
+*   检查和验证像index.js:               npm run lint
+*   根目录创建.eslintignore文件并添加:   build
+* 除了从命令行执行linter之外，一个更好的选择是在编辑器中配置一个eslint-plugin,
+* 但是我用的web Storms,本身静态检查非常方便，所以lint工具目前看不出啥优势。
+*
 * */
