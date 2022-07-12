@@ -48,4 +48,18 @@
 │   ├── config.js
 │   ├── logger.js
 │   └── middleware.js
+*
+* Testing Node applications
+* 有许多不同的测试库或测试运行器可用于JS,本例使用Facebook开发的【 Jest 】，
+* 和Javascript测试库之王【 Mocha 】相似，jest测试React应用很出色。
+*   安装在开发环境：    npm install --save-dev jest
+*   定义npm脚本test,用jest执行测试，并以verbose风格报告测试结果：
+*           "test": "jest --verbose"
+*   指定执行环境为Node，package.json末尾添加：
+*          "jest":{ "testEnvironment":"node" }
+*       或者，一个默认名为jest.config.js的配置文件:
+*       module.exports = { testEnvironment: 'node', }
+*   创建测试文件。。。 tests/....test.js 【注意】文件名一定要包含.test.js
+*   part3-phonebook里随便哪里都可以运行：
+*           npm test [文件名空就是测试全部]
 * */
