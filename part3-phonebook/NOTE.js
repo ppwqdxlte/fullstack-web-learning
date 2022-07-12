@@ -33,5 +33,19 @@
 *
 * part4:  我们将继续我们在后台的工作。我们的第一大主题将是为后端编写单元和集成测试。
 *           在我们完成测试后，我们将看看如何实现用户认证和授权。
-*
+* 修改我们项目的结构以遵守Node.js的最佳实践,在对我们项目的目录结构进行修改后，我们最终得到以下结构。
+├── index.js
+├── app.js
+├── build
+│   └── ...
+├── controllers
+│   └── notes.js
+├── models
+│   └── note.js
+├── package-lock.json
+├── package.json
+├── utils
+│   ├── config.js
+│   ├── logger.js
+│   └── middleware.js
 * */
