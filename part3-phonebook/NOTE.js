@@ -80,4 +80,24 @@
 *   9.-t选项可用于运行具有特定名称的测试：
 *       npm test -- -t "a specific note is within the returned notes"
 *   10.运行所有名称中包含notes的测试：   npm test -- -t 'notes'
+*
+* async / await:
+*   一个个等做完，then里面套then里面套then...就会产生【 回调地狱 】，ES7引入的async await后解决 上面的问题。
+* 通过【 链式承诺 】比如：Note.find({})
+                          .then(notes => {
+                            return notes[0].remove()
+                          })
+                          .then(response => {
+                            console.log('the first note is removed')
+                            // more code here
+                          })
+* 一定程度上控制局面，链式then干净整洁，但有更换方法，ES6引入的【 生成器函数 】更聪明，
+* 将异步代码写得看起来是同步的，由于语法笨重，ES7中引入的【 async,await 】与生成器相同功能，
+* 但以更便于理解和更简洁的方式。个人理解，看起来同步，异步的结果也是同步的，上一步的结果必然在
+* 下一步引用之前就已经准备好了，而不是异步执行可能带来的空结果。
+*               const notes = await Note.find({})
+                const response = await notes[0].remove()
+                console.log('the first note is removed')
+*           新语法比then-chain简单多了。【 只有在async函数中才能使用await。】
+* 把后端改成 async && await!!!
 * */
