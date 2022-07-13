@@ -68,7 +68,10 @@
 *       npm install --save-dev cross-env
 *  如果你要把这个应用部署到heroku，请记住，如果cross-env被保存为开发依赖项，它将在你的Web服务器上引起应用错误。为了解决这个问题，通过在命令行中运行这个命令，将cross-env改为生产依赖关系:
 *        npm i cross-env -P
-*
 * 测试单独数据库，在内存中运行Mongo或使用Docker容器，这是 "相对简单 "的实现，
 * 我们简单点吧，而是继续使用MongoDB Atlas，
+*   6.用supertest包测试 REST API：npm install --save-dev supertest
+*   7.写测试用例node_api.test.js
+*   8.npm test node_api.test.js
+*
 * */

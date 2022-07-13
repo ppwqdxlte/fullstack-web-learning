@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
+const MONGODB_URL = require('../utils/config').MONGODB_URL
 /*  定义环境变量的值有很多种方法：
 *       1. MONGODB_URI= address_here npm run dev
 *       2. dotenv库
 * */
-const url = process.env.MONGODB_URL
-console.log('Mongodb-url is:', url)
+const url = MONGODB_URL
 
 const personSchema = new mongoose.Schema({
     name: {
