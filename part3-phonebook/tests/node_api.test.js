@@ -5,51 +5,69 @@
 * supertest的文档说如下。
 如果服务器还没有监听连接，那么它就会为你绑定一个短暂的端口，所以不需要跟踪端口。
 * */
-const mongoose = require('mongoose')
 const supertest = require('supertest')
+const mongoose = require('mongoose')
+const helper = require('./test_helper')
 const app = require('../app')
+const api = supertest(app)
+
 const Person = require('../models/person').Person
 
-const initialPersons = [
-    {name: '大吉大利', number: '99-99-9999999'},
-    {name: '万事如意', number: '99-99-9999999'}]
-
-beforeEach(async ()=>{
+beforeEach(async () => {
     await Person.deleteMany({})
-    let personObj = new Person(initialPersons[0])
+    let personObj = new Person(helper.initialPersons[0])
     await personObj.save()
-    personObj = new Person(initialPersons[1])
+    personObj = new Person(helper.initialPersons[1])
     await personObj.save()
 })
 
-const api = supertest(app)
-
-test('persons are returned as json', async () => {
+/*test('persons are returned as json', async () => {
     await api
         .get('/api/persons')
         .expect(200)
         .expect('Content-Type', /json/)
-}, 90000) //jest默认5秒超时，设置久点
+},0o100000) //jest默认5秒超时，设置久点
 
 test('there are two people', async () => {
-    const response = await api.get('/api/persons')
-    expect(response.body).toHaveLength(initialPersons.length)
+    const response = await helper.personsInDb()
+    expect(response).toHaveLength(helper.initialPersons.length)
 })
 
 test('the first person is lao wang', async () => {
-    const response = await api.get('/api/persons')
+    const response = await helper.personsInDb()
     // execution gets here only after the HTTP request is complete
 // the result of HTTP request is saved in variable response
-    expect(response.body[0].name).toBe('大吉大利')
+    expect(response[0].name).toBe('大吉大利')
 })
 
 test('a specific note is within the returned notes', async () => {
-    const response = await api.get('/api/persons')
-    const contents = response.body.map(r => r.name)
-    expect(contents).toContain(
-        '万事如意'
-    )
+    const response = await helper.personsInDb()
+    const names = response.map(r => r.name)
+    expect(names).toContain('万事如意')
 })
+
+test('a valid person can be added', async () => {
+    const newPerson = {name: '早日王者', number: '11-11-1111111'}
+    await api
+        .post('/api/persons')
+        .send(newPerson)
+        .expect(200)
+        .expect('Content-Type', /json/)
+    const res = await helper.personsInDb()
+    const names = res.map(r => r.name)
+    expect(res).toHaveLength(helper.initialPersons.length + 1)
+    expect(names).toContain('早日王者')
+})
+
+test('person without name is not added', async () => {
+    const newPerson = {number: '111'}
+    await api
+        .post('/api/persons')
+        .send(newPerson)
+        .expect(400)
+    const res = await helper.personsInDb()
+    expect(res).toHaveLength(helper.initialPersons.length)
+},10000)*/
 
 afterAll(() => {
     mongoose.connection.close()

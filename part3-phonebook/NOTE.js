@@ -100,4 +100,7 @@
                 console.log('the first note is removed')
 *           新语法比then-chain简单多了。【 只有在async函数中才能使用await。】
 * 把后端改成 async && await!!!
+*
+* 代码重构有风险，需谨慎，所以没修改一个方法就写个test测试，上一次commit都没问题了，
+* 这次写test就是演示就是练习。
 * */
