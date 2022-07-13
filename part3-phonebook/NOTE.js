@@ -52,14 +52,23 @@
 * Testing Node applications
 * 有许多不同的测试库或测试运行器可用于JS,本例使用Facebook开发的【 Jest 】，
 * 和Javascript测试库之王【 Mocha 】相似，jest测试React应用很出色。
-*   安装在开发环境：    npm install --save-dev jest
-*   定义npm脚本test,用jest执行测试，并以verbose风格报告测试结果：
-*           "test": "jest --verbose"
-*   指定执行环境为Node，package.json末尾添加：
-*          "jest":{ "testEnvironment":"node" }
-*       或者，一个默认名为jest.config.js的配置文件:
-*       module.exports = { testEnvironment: 'node', }
-*   创建测试文件。。。 tests/....test.js 【注意】文件名一定要包含.test.js
-*   part3-phonebook里随便哪里都可以运行：
-*           npm test [文件名空就是测试全部]
+*   1.安装在开发环境：    npm install --save-dev jest
+*   2.定义npm脚本test,用jest执行测试，并以verbose风格报告测试结果： "test": "jest --verbose"
+*   3.指定执行环境为Node，package.json末尾添加：    "jest":{ "testEnvironment":"node" }
+*       或者，一个默认名为jest.config.js的配置文件:   module.exports = { testEnvironment: 'node', }
+*   4.创建测试文件。。。 tests/....test.js 【注意】文件名一定要包含.test.js
+*   5.part3-phonebook里随便哪里都可以运行：  npm test [文件名空就是测试全部]
+*
+* 有时测试要用【 模拟数据库 】而不是 真正DB，比如【 mongodb-memory-server 】,
+* 如果后端app相对简单，就用【 REST API 】方式整体测试，包括server+DB，
+* 这种将系统的多个组件作为一个整体进行测试的测试，被称为【 集成测试 】。
+* 【 NODE_ENV 】定义app的执行模式，在这个app中不在production模式就只加载.env就行了
+* test脚本中加了 --runInBand 将阻止jest并行运行测试。
+* 【注意】：这样写脚本在Windows上不好使，可安装开发依赖【 cross-env包 】来纠正:
+*       npm install --save-dev cross-env
+*  如果你要把这个应用部署到heroku，请记住，如果cross-env被保存为开发依赖项，它将在你的Web服务器上引起应用错误。为了解决这个问题，通过在命令行中运行这个命令，将cross-env改为生产依赖关系:
+*        npm i cross-env -P
+*
+* 测试单独数据库，在内存中运行Mongo或使用Docker容器，这是 "相对简单 "的实现，
+* 我们简单点吧，而是继续使用MongoDB Atlas，
 * */
