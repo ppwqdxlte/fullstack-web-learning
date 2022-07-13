@@ -72,6 +72,12 @@
 * 我们简单点吧，而是继续使用MongoDB Atlas，
 *   6.用supertest包测试 REST API：npm install --save-dev supertest
 *   7.写测试用例node_api.test.js
-*   8.npm test node_api.test.js
+*   8.npm test node_api.test.js 、npm test -- tests/note_api.test.js
 *
+* Initializing the database before tests
+* 为了使我们的测试更加稳健，我们必须在运行测试之前以一种可控的方式重置数据库并生成所需的测试数据，
+* 在每次测试之前用beforeEach函数初始化数据库：
+*   9.-t选项可用于运行具有特定名称的测试：
+*       npm test -- -t "a specific note is within the returned notes"
+*   10.运行所有名称中包含notes的测试：   npm test -- -t 'notes'
 * */

@@ -8,6 +8,19 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
+const Person = require('../models/person').Person
+
+const initialPersons = [
+    {name: '大吉大利', number: '99-99-9999999'},
+    {name: '万事如意', number: '99-99-9999999'}]
+
+beforeEach(async ()=>{
+    await Person.deleteMany({})
+    let personObj = new Person(initialPersons[0])
+    await personObj.save()
+    personObj = new Person(initialPersons[1])
+    await personObj.save()
+})
 
 const api = supertest(app)
 
@@ -16,18 +29,26 @@ test('persons are returned as json', async () => {
         .get('/api/persons')
         .expect(200)
         .expect('Content-Type', /json/)
-},100000) //jest默认5秒超时，设置久点
+}, 90000) //jest默认5秒超时，设置久点
 
 test('there are two people', async () => {
     const response = await api.get('/api/persons')
-    expect(response.body).toHaveLength(2)
+    expect(response.body).toHaveLength(initialPersons.length)
 })
 
 test('the first person is lao wang', async () => {
     const response = await api.get('/api/persons')
     // execution gets here only after the HTTP request is complete
 // the result of HTTP request is saved in variable response
-    expect(response.body[0].name).toBe('老王')
+    expect(response.body[0].name).toBe('大吉大利')
+})
+
+test('a specific note is within the returned notes', async () => {
+    const response = await api.get('/api/persons')
+    const contents = response.body.map(r => r.name)
+    expect(contents).toContain(
+        '万事如意'
+    )
 })
 
 afterAll(() => {
